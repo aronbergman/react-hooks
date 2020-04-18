@@ -25,6 +25,10 @@ const Ingredients = () => {
             })
     }, []);
 
+    useEffect(() => {
+        console.log('Second useEffect', setUserIngredients)
+    }, [setUserIngredients])
+
     const addIngredientHandler = ingredient => {
         fetch('https://burger-builder-56e5a.firebaseio.com/ingredients2.json', {
             method: 'POST',
