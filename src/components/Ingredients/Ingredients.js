@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import IngredientForm from './IngredientForm';
 import Search from './Search';
@@ -6,6 +6,24 @@ import IngredientList from "./IngredientList";
 
 const Ingredients = () => {
     const [userIngredients, setUserIngredients] = useState([])
+
+    useEffect(() => {
+        //    после и для каждого рендеринга
+        fetch('https://burger-builder-56e5a.firebaseio.com/ingredients2.json')
+            .then(res => res.json())
+            .then(res => {
+                console.log('res')
+                let loadedIngredients = [];
+                for (let key in res) {
+                    loadedIngredients.push({
+                        id: key,
+                        title: res[key].title,
+                        amount: res[key].amount
+                    })
+                }
+                setUserIngredients(loadedIngredients)
+            })
+    }, []);
 
     const addIngredientHandler = ingredient => {
         fetch('https://burger-builder-56e5a.firebaseio.com/ingredients2.json', {
